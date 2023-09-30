@@ -38,7 +38,7 @@ const DropZone = (props) => {
         data.append('file', event[0]);
         
         // using Axios to POST 
-        axios.post(API_ENDPOINT, data,)
+        axios.post(`${API_ENDPOINT}/upload`, data,)
         .then((res) => {
             
                 setDataReceived({
