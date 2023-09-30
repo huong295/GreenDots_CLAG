@@ -5,8 +5,7 @@ import DropZone from '../component/AITool/DropZone';
 import AIToolResultRight from '../component/AITool/AIToolResultRight';
 
 
-// const API_ENDPOINT = 'http://localhost:3002'
-const API_ENDPOINT = 'https://caring-moose-plainly.ngrok-free.app'
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
 
 
 // declare props for AITool component

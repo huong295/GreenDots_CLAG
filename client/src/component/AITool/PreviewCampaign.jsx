@@ -3,19 +3,20 @@ import { Button } from "./Button";
 import { ElementTrashTag } from "./ElementTrashTag";
 import "./styles.css";
 
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+
 export const PreviewCampaign = ({ data }) => {
     return (
         <div className="preview-campaign">
             {
                 data.avatar
-                ? (<img src={`https://greendots-aitool-server.onrender.com/image/${data.avatar}`}/>)
+                ? (<img src={`${API_ENDPOINT}/image/${data.avatar}`}/>)
                 : (<div className="campaign-avatar" /> )
             }
             <div className="preview-campaign-component">
                 <div className="header">
                     <div className="div">
-                        <div className="text-wrapper">{data.name ? data.name : 'Campaign name'}</div>
-                        <div className="text-wrapper-2">⭐ {data.averageRating ? data.averageRating : 'd'} / 5.0</div>
+                        <div className="text-wrapper">{data['CampaignName'] ? data['CampaignName'] : 'Campaign name'}</div>
                     </div>
                     <div className="buttons">
                         <Button
@@ -39,8 +40,8 @@ export const PreviewCampaign = ({ data }) => {
                         <span className="span">Address: </span>
                         <span className="text-wrapper-3">
                             {
-                                data.address 
-                                ? data.address 
+                                data['Address'] 
+                                ? data['Address'] 
                                 : 'Street, Ward, District, Province, Country'
                             }
                         </span>
@@ -50,11 +51,15 @@ export const PreviewCampaign = ({ data }) => {
                     <p className="time">
                         <span className="span">Time: </span>
                         <span className="text-wrapper-3">
-                            {
-                                data.time 
-                                ? data.time 
+                            from {
+                                data['StartDate'] 
+                                ? data['StartDate'] 
+                                : '17/6/2023'
+                            } to {
+                                data['EndDate'] 
+                                ? data['EndDate'] 
                                 : '17/10/2023'
-                            }
+                            }                            
                         </span>
                     </p>
                 </div>
@@ -63,8 +68,8 @@ export const PreviewCampaign = ({ data }) => {
                         <span className="span">Working hour: </span>
                         <span className="text-wrapper-3">
                             {
-                                data.workingHour 
-                                ? data.workingHour 
+                                data['WorkingHour'] 
+                                ? data['WorkingHour'] 
                                 : '13:00 - 15:00'
                             }
                         </span>
@@ -75,14 +80,14 @@ export const PreviewCampaign = ({ data }) => {
                         <span className="span">Gift(s): </span>
                         <span className="text-wrapper-3"> 
                             {
-                                data.gifts 
-                                ? data.gifts
+                                data['Description'] 
+                                ? data['Description'].split('\n Gift: ')[1]
                                 : 'Notebooks and pen'
                             }
                         </span>
                     </p>
                 </div>
-                <div className="accepted-trash">
+                {/* <div className="accepted-trash">
                     <div className="accepted-trash-2">Accepted trash: </div>
                     <div className="tags">
                         {
@@ -96,7 +101,7 @@ export const PreviewCampaign = ({ data }) => {
                             )
                         }
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

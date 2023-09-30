@@ -3,9 +3,8 @@ import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import ImageWithRectangles from './ImageWithRectangles';
 
-// const API_ENDPOINT = 'https://greendots-aitool-server.onrender.com/upload';
-// const API_ENDPOINT = 'http://localhost:3002/upload';
-const API_ENDPOINT = 'https://caring-moose-plainly.ngrok-free.app'
+
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
 
 
 const DropZone = (props) => {
@@ -45,7 +44,6 @@ const DropZone = (props) => {
                     filename: res.data.filename,
                     bboxes: res.data.bboxes,
                 })
-                // console.log(res.data.classNames)
                 
                 // send data to parent node 
                 props.sendData({
@@ -132,18 +130,13 @@ const DropZone = (props) => {
                         (<>
 
                             <div className='AITool-result-content'>
-                                {/* <h1 className='AITool-result-left-title'>
-                                    result: {dataReceived.prediction.name ? dataReceived.prediction.name : 'undefined'}
-                                </h1> */}
                                 <div className='AITool-result-image'>
-                                    {/* <img src={`https://greendots-aitool-server.onrender.com/image/${dataReceived.filename}`}/> */}
                                     <ImageWithRectangles 
-                                        imgSrc={`http://localhost:3002/image/${dataReceived.filename}`} 
+                                        imgSrc={`${API_ENDPOINT}/image/${dataReceived.filename}`} 
                                         bboxes={dataReceived.bboxes}
                                     />
                                 </div>
                                 <div className='AITool-result-newimg' onClick={handleUpload}>
-                                    {/* <img src='https://greendots-aitool-server.onrender.com/image/AI_Tool_refresh.svg'/> */}
                                     <p>Click to upload another image</p>
                                 </div>
                             </div>

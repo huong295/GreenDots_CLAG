@@ -1,34 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { PreviewCampaign } from './PreviewCampaign';
+import axios from 'axios';
 
 
-const API_ENDPOINT = 'https://caring-moose-plainly.ngrok-free.app'
-// const API_ENDPOINT = 'http://localhost:3002/upload';
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
 
-const tempItems = [
-    {
-        id: 1,
-        name: "Blister pack",
-        description: "This is description 1",
-    },
-    {
-        id: 2,
-        name: "Blister pack 2",
-        description: "This is description 2",
-    },
-    {
-        id: 3,
-        name: "Blister pack 3",
-        description: "This is description 3",
-    },
-    {
-        id: 4,
-        name: "Blister pack 4",
-        description: "This is description 4",
-    },
-  ];
 
-function Toggler({ data, title, isInfo }) {
+
+export default function Toggler({ data, title, isInfo }) {
 
     const [isOpen, setIsOpen] = useState({});
     const [trashInfo, setTrashInfo] = useState({});
@@ -45,44 +24,39 @@ function Toggler({ data, title, isInfo }) {
 
 
     // fetch data from database
-    function getInfo(tagID) {
+    function getInfo(tagID) { // get trash information by tag id
         
-        if (!isOpen[tagID]) {
-            // useEffect(() => {
-            //     axios.get(`${baseURL}/trash-info/`).then((response) => {
-            //         setTrashInfo(response.data);
-            //     });
-            // }, [])
-            setTrashInfo({
-                ...trashInfo,
-                [tagID]: tempItems[tagID%4]
-            }) // end fetching data
+        if (!isOpen[tagID] && !trashInfo[tagID]) { // only fetch data the first time user open the item
+            axios.get(`${API_ENDPOINT}/trash-info/${tagID}`, {
+                headers: {
+                  'ngrok-skip-browser-warning': 'true' // Set the ngrok-skip-browser-warning header
+                }
+            }).then((response) => {
+                setTrashInfo({
+                    ...trashInfo,
+                    [tagID]: {
+                      description: response.data.description
+                    }
+                }) // end fetching data
+            });
         } // end if
     } // end getInfo
 
 
     function getLocations(tagID) {
 
-        if (!trashLocations[tagID]){
-            
-            // useEffect(() => {
-            //     axios.get(`${baseURL}/trash-locations/`).then((response) => {
-            //         setTrashInfo(response.data);
-            //     });
-            // }, tempItems)
-            setTrashLocations({
-                ...trashLocations,
-                [tagID]: [{
-                        avatar: '',
-                        name: 'Test campaign name',
-                        address: 'Test address',
-                    }, {
-                        avatar: '',
-                        name: 'Test campaign name',
-                        address: 'Test address',
-                    },
-                ]
-            }) // end fetching locations
+        if (!isOpen[tagID] && !trashLocations[tagID]){ // only fetch data the first time user open the item
+            axios.get(`${API_ENDPOINT}/trash-locations/${tagID}`, {
+              headers: {
+                'ngrok-skip-browser-warning': 'true' // Set the ngrok-skip-browser-warning header
+              }
+            }).then((response) => {
+                console.log(response.data)
+                setTrashLocations({
+                    ...trashLocations,
+                    [tagID]: [...response.data]
+                }) // end fetching data
+            });
         } // end if
         console.log(trashLocations)
     } // end getLocations
@@ -106,12 +80,14 @@ function Toggler({ data, title, isInfo }) {
                 </button>
                 { 
                     isInfo 
-                    ? <>{ isOpen[d.id] && <p>{trashInfo[d.id].description}</p> }</> 
+                    ? <>{ isOpen[d.id] && trashInfo[d.id] && <p>{trashInfo[d.id].description}</p> }</> 
                     :
                     <>
                         {isOpen[d.id] && (
                             <div>{
-                                trashLocations[d.id].map((locData, index) => <PreviewCampaign data={locData}/>)
+                                trashLocations[d.id] && trashLocations[d.id].length > 0
+                                ? trashLocations[d.id].map((locData, index) => <PreviewCampaign key={index} data={locData}/>)
+                                : (<p>No location available</p>)
                             }</div>
                         )}
                     </>
@@ -125,4 +101,4 @@ function Toggler({ data, title, isInfo }) {
 }
 
 
-export default Toggler;
+// export default Toggler;
