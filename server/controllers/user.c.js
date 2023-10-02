@@ -9,13 +9,17 @@ module.exports = {
     signUp: async (req, res) => {
         const username = `${req.body.username.trim()}`
         const password = `${req.body.password.trim()}`
-        const email = req.body.email
+        const email = req.body.email   
         // validate password and username length
-        if (password.length < 8 || username.length < 8) {
-            res.status(401).send({
+        if (password.length < 8 
+            || username.length < 5
+            || password.length >= 50
+            || username.length >= 50) {
+            res.send({  
                 success: false,
-                message: 'Password and Username must be bigger than 8 (not containing whitespaces)'
+                message: 'Password and Username must be bigger than 8 and smaller than 50 characters (not containing whitespaces)'
             })
+            return
         } 
 
         user.createUser(username, email, password)
@@ -40,14 +44,16 @@ module.exports = {
         
         // validate password and username length
         if (password.length < 8 || username.length < 8) {
-            res.status(401).send({
+            res.send({
                 success: false,
-                message: 'Password and Username must be bigger than 8 (not containing whitespaces)'
+                message: 'Password and Username must be bigger than 8 and smaller than 50 (not containing whitespaces)'
             })
+            return
         }
 
         user.authenUser(username, password)
             .then(({isAuthen, userID='None'}) => {
+                console.log('Server response')
                 if (isAuthen) {
                     const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
                     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
@@ -59,21 +65,6 @@ module.exports = {
                     const accessToken = jwt.sign(dataForAccessToken, accessTokenSecret, {
                         expiresIn: accessTokenLife,
                       });
-                      
-                    // if (!accessToken) {
-                    //     return res
-                    //         .status(401)
-                    //         .send('Đăng nhập không thành công, vui lòng thử lại.');
-                    // }
-
-                    // let refreshToken = randToken.generate(jwtVariable.refreshTokenSize); // tạo 1 refresh token ngẫu nhiên
-                    // if (!user.refreshToken) {
-                    //     // Nếu user này chưa có refresh token thì lưu refresh token đó vào database
-                    //     await userModel.updateRefreshToken(user.username, refreshToken);
-                    // } else {
-                    //     // Nếu user này đã có refresh token thì lấy refresh token đó từ database
-                    //     refreshToken = user.refreshToken;
-                    // }
 
                     res.send({
                         // JWT Token

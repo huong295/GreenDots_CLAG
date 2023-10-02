@@ -1,6 +1,31 @@
 // src/components/Login.tsx
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom'; // navigate to another page
+
+
+function validate(username: string, password: string) {
+  // Allows alphanumeric characters and underscores, 5-45 characters long
+  const usernamePattern = /^[a-zA-Z0-9_]{5,45}$/;
+  // At least 8 characters, at least one uppercase letter, one lowercase letter, and one digit
+  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+  // test username
+  if (!usernamePattern.test(username)) {
+    alert('Wrong username.');
+    return false;
+  }
+
+  // test password
+  if (!passwordPattern.test(password)) {
+    alert('Wrong password.')
+    return false;
+  }
+
+  return true;
+}
+
+
 
 const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
 
@@ -8,11 +33,13 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    // Add your login logic here
-    console.log("Username:", username);
-    console.log("Password:", password);
+    // validate 
+    if (!validate(username, password)) {
+      return;
+    }
     const data = { username, password }
     // fetch
     axios.post(`${API_ENDPOINT}/auth/login`, data, 
@@ -22,6 +49,7 @@ const Login: React.FC = () => {
         {
           console.log(result.data)
           alert('log in success')
+          navigate('/')
         }
         else {
           alert(result.data.message)

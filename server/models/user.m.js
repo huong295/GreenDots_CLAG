@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 // CONFIG SPACE
 const saltRounds = 10
 
-
+ 
 module.exports = {
     // retrieve user from the database 
     getUserByUsername: async (username) => {
@@ -15,7 +15,7 @@ module.exports = {
         } catch (error) {
             console.log(error);
             throw error; // Throw the error to be caught by the caller
-        }
+        } /// )
     },
 
     // create a new user
@@ -38,7 +38,6 @@ module.exports = {
                     WHERE username = '${username}' OR email = '${email}'
                 );
             `)            
-            // console.log(insertInfo)
             console.log(insertInfo)
             if(!insertInfo.insertId) {// don't allow users create new account
                 throw new Error('User already exists.')

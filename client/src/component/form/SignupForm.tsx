@@ -1,9 +1,39 @@
 // src/components/SignupForm.tsx
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from 'axios'; // fetch, POST data
+import { useNavigate } from 'react-router-dom'; // navigate to another page
 
 
 const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
+
+
+function validate(username: string, password: string, email: string) {
+  // Allows alphanumeric characters and underscores, 5-45 characters long
+  const usernamePattern = /^[a-zA-Z0-9_]{5,45}$/;
+  // At least 8 characters, at least one uppercase letter, one lowercase letter, and one digit
+  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  // test username
+  if (!usernamePattern.test(username)) {
+    alert('Username must be from 5-45 characters');
+    return false;
+  }
+
+  // test password
+  if (!passwordPattern.test(password)) {
+    alert('Password must be from 8-50 characters, having at least 1 digit, 1 uppercase character and 1 lowercase character.')
+    return false;
+  }
+
+  // test email 
+  if (!emailPattern.test(email)) {
+    alert('Invalid email. Please try again.')
+    return false;
+  }
+
+  return true;
+}
 
 
 const SignupForm: React.FC = () => {
@@ -11,20 +41,24 @@ const SignupForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignup = () => {
+    if (validate(username, password, email) === false) {
+      return
+    }
     // Add your signup logic here
     const data = { username, password, email }
     // fetch
-    axios.post(`${API_ENDPOINT}/auth/signup`, data, 
-    )
+    axios.post(`${API_ENDPOINT}/auth/signup`, data,)
     .then((result) => {
-      console.log(result)
       if (result.data.success) {
-        alert('Sign up successfully');
+        alert('Sign up successfully!');
+        // redirect to login page when sign up successfully
+        navigate("/login");
       }
       else {
-        alert('User exists')
+        alert(result.data.message)
       }
     })
     .catch((err) =>{
