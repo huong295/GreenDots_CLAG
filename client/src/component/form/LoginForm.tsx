@@ -4,6 +4,9 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom'; // navigate to another page
 
 
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
+
+
 function validate(username: string, password: string) {
   // Allows alphanumeric characters and underscores, 5-45 characters long
   const usernamePattern = /^[a-zA-Z0-9_]{5,45}$/;
@@ -25,10 +28,6 @@ function validate(username: string, password: string) {
   return true;
 }
 
-
-
-const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT
-
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -47,19 +46,22 @@ const Login: React.FC = () => {
       .then((result) => {
         if (result.data.success)
         {
-          console.log(result.data)
+          // Storing the JWT
+          localStorage.setItem('jwtToken', result.data.accessToken);
+          localStorage.setItem('loggedIn', '1');
+
           alert('log in success')
           navigate('/')
         }
         else {
           alert(result.data.message)
-          console.log(result.data)
         }
       })
       .catch((err) =>{
         console.log(err)
       })
   };
+
 
   const showPassword = () => {
     if (isChecked) {
@@ -69,6 +71,7 @@ const Login: React.FC = () => {
       setIsChecked(true)
     }
   }
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -94,7 +97,7 @@ const Login: React.FC = () => {
         </div>
         <input type="checkbox" onChange={showPassword} checked={isChecked}/>
         <label htmlFor='showPass' onClick={showPassword}>Show your password</label>
-        <div className="underline py-2">Forgot your password? </div>
+        <div className="underline py-2">Forgot your password?</div>
         <button
           className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
           onClick={handleLogin}
@@ -102,10 +105,10 @@ const Login: React.FC = () => {
           Login
         </button>
         <div className="w-full text-center py-2">New to Green dots?  <span>
-                <a href="/signup" className="underline">
-                  Sign up{' '}
-                </a>
-              </span> here</div>
+            <a href="/signup" className="underline">
+              Sign up{' '}
+            </a>
+          </span> here</div>
       </div>
     </div>
   );
