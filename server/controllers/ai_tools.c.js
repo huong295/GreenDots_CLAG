@@ -7,7 +7,7 @@ const trash = require('../models/trash.m')
 
 // CONFIG PREDEFINED PARAMETERS
 // const NUM_CLASSES = 28; // declare number of supported classes
-const CONFIDENT_THRESHOLD = 0.01; // define threshold that we accept a prediction
+const CONFIDENT_THRESHOLD = 0.3; // define threshold that we accept a prediction
 const IOU_THRESHOLD = 0.4; // define threshold that we suppress other predictions
 const MAX_SELECTED_BOXES =  20; // number of boxes selected
 // read data of classes that the model support
@@ -27,11 +27,11 @@ function formatPredictions(imageWidth, imageHeight, boxes, selected_indices, cla
         var bbox = {}; 
         // calculate bottom-left and top-right coordinates
         /// top-left
-        const minX = boxes[index][0] * imageHeight;
-        const minY = boxes[index][1] * imageWidth;
+        const minY = boxes[index][0] * imageHeight;
+        const minX = boxes[index][1] * imageWidth;
         // bottom-right 
-        const maxX = boxes[index][2] * imageHeight;
-        const maxY = boxes[index][3] * imageWidth;
+        const maxY = boxes[index][2] * imageHeight;
+        const maxX = boxes[index][3] * imageWidth;
         console.log(`min (${minX}, ${minY}), max (${maxX}, ${maxY})`)
 
         // return a bbox with its top-left coordinate, width, height and label name
@@ -72,7 +72,7 @@ module.exports = {
         
             console.log('Load image successfully');
             // convert to tensor and normalize each pixel value to range (0-255)
-            const img = tfn.node.decodeImage(buffer).div(255).toInt().expandDims(0);
+            const img = tfn.node.decodeImage(buffer).toInt().expandDims(0);
         
             // make predictions
             let output = await model.executeAsync(img); // graph model doesn't use predict as normal
@@ -97,7 +97,6 @@ module.exports = {
                 img.shape[1], // image height
                 boxes, // bounding boxes
                 selected_indices.arraySync(), // indexes of bounding boxes that pass NMS
-                // boxes.map((v, i) => i),
                 classes, // predicted classes
                 classesDir // predefined classes that the model support
             );
