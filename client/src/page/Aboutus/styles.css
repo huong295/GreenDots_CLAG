@@ -638,7 +638,7 @@ a {
   height: 242.23px !important;
 }
 
-.aboutus .partner-content {
+.aboutus .team-content {
   display: flex !important;
   flex-direction: column !important;
   align-items: flex-start !important;
@@ -667,7 +667,7 @@ a {
   letter-spacing: 0 !important;
 }
 
-.aboutus .partners {
+.aboutus .team {
   display: flex !important;
   flex-wrap: wrap !important;
   align-items: center !important;
@@ -680,7 +680,7 @@ a {
   flex: 0 0 auto !important;
 }
 
-.aboutus .element-partner {
+.aboutus .element-team {
   display: flex !important;
   flex-direction: column !important;
   width: 240px !important;
@@ -720,7 +720,7 @@ a {
   flex: 0 0 auto !important;
 }
 
-.aboutus .partner-name-wrapper {
+.aboutus .team-name-wrapper {
   display: flex !important;
   align-items: center !important;
   gap: 10px !important;
@@ -731,7 +731,7 @@ a {
   flex: 0 0 auto !important;
 }
 
-.aboutus .partner-name {
+.aboutus .team-name {
   position: relative !important;
   flex: 1 !important;
   margin-top: -1px !important;

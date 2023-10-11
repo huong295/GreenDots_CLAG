@@ -16,3 +16,6 @@
     margin-bottom: 0%;
 }
 
+:where(.css-dev-only-do-not-override-1wosoj8).ant-input-disabled, :where(.css-dev-only-do-not-override-1wosoj8).ant-input[disabled]{
+    color: rgba(0, 0, 0, 1)
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { AutoComplete } from "antd";
 import debounce from "lodash/debounce";
@@ -6,10 +6,11 @@ import debounce from "lodash/debounce";
 const LIMIT = 25;
 const DEBOUNCE_TIME = 800;
 
-const SearchBar = ({ onLocationSearch }) => {
+const SearchBar = ({ onLocationSearch = (object?: any) => { return object } }) => {
   const [suggestions, setSuggestions] = useState([]);
+  // const { searchResult, setSearchResult } = useMapItems;
 
-  const handleSearch = (value) => {
+  const handleSearch = (value: any) => {
     const newQuery = value;
     if (newQuery) {
       axios
@@ -19,7 +20,7 @@ const SearchBar = ({ onLocationSearch }) => {
           )}&format=json&limit=${LIMIT}&countrycodes=VN`
         )
         .then((response) => {
-          const convertData = response.data.map((item) => ({
+          const convertData = response.data.map((item: any) => ({
             label: item.display_name,
             value: item.display_name,
             extra: {
@@ -27,7 +28,6 @@ const SearchBar = ({ onLocationSearch }) => {
               lon: item.lon
             }
           }));
-          console.log("aa",convertData);
           setSuggestions(convertData);
         })
         .catch((error) => {
@@ -40,10 +40,10 @@ const SearchBar = ({ onLocationSearch }) => {
 
   return (
     <AutoComplete
-      style={{ width: "50%" }}
+      style={{ width: "30%" }}
       onSearch={debounce(handleSearch, DEBOUNCE_TIME)}
       onSelect={(value, option) => {
-        const { extra } = option;
+        const { extra = { lat: '0', lon: '0' } } = option;
         onLocationSearch({
           display_name: value,
           lat: extra.lat ? parseFloat(extra.lat) : undefined,
@@ -61,4 +61,7 @@ const SearchBar = ({ onLocationSearch }) => {
   );
 };
 
+// SearchBar.propTypes = {
+//   onLocationSearch: PropTypes.func
+// }
 export default SearchBar;

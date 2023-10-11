@@ -201,15 +201,15 @@ const Aboutus = (): JSX.Element => {
               </Link>
             </div>
           </div>
-          <div className="partner-content">
-            <div className="large-4">Our partners</div>
-            <div className="partners">
-              <div className="element-partner">
+          <div className="team-content">
+            <div className="large-4">Our team</div>
+            <div className="team">
+              <div className="element-team">
                 <div className="div-3">
                   <div className="logo-wrapper"><img className="logo-2" src={logo_7} /></div>
                 </div>
                 <div className="details">
-                  <div className="partner-name-wrapper"><div className="partner-name">Thanh Hương</div></div>
+                  <div className="team-name-wrapper"><div className="team-name">Thanh Hương</div></div>
                   <div className="brief-description-wrapper">
                       <p className="brief-description">
                           Studying at the University of Information Technology.
@@ -218,12 +218,12 @@ const Aboutus = (): JSX.Element => {
                   <div className="contact-info-wrapper"><div className="contact-info">Website</div></div>
                 </div>
               </div>
-              <div className="element-partner">
+              <div className="element-team">
                 <div className="div-3">
                   <div className="logo-wrapper"><img className="logo-2" src={logo_7} /></div>
                 </div>
                 <div className="details">
-                  <div className="partner-name-wrapper"><div className="partner-name">Kim Uyên</div></div>
+                  <div className="team-name-wrapper"><div className="team-name">Kim Uyên</div></div>
                   <div className="brief-description-wrapper">
                       <p className="brief-description">
                           Studying at the University of Information Technology.
@@ -232,12 +232,12 @@ const Aboutus = (): JSX.Element => {
                   <div className="contact-info-wrapper"><div className="contact-info">Website</div></div>
                 </div>
               </div>
-              <div className="element-partner">
+              <div className="element-team">
                 <div className="div-3">
                   <div className="logo-wrapper"><img className="logo-2" src={logo_7} /></div>
                 </div>
                 <div className="details">
-                  <div className="partner-name-wrapper"><div className="partner-name">Uyển Nhi</div></div>
+                  <div className="team-name-wrapper"><div className="team-name">Uyển Nhi</div></div>
                   <div className="brief-description-wrapper">
                     <p className="brief-description">
                       Studying at the University of Information Technology.
@@ -246,12 +246,12 @@ const Aboutus = (): JSX.Element => {
                   <div className="contact-info-wrapper"><div className="contact-info">Website</div></div>
                 </div>
               </div>
-              <div className="element-partner">
+              <div className="element-team">
                 <div className="div-3">
                   <div className="logo-wrapper"><img className="logo-2" src={logo_7} /></div>
                 </div>
                 <div className="details">
-                  <div className="partner-name-wrapper"><div className="partner-name">Thanh Mai</div></div>
+                  <div className="team-name-wrapper"><div className="team-name">Thanh Mai</div></div>
                   <div className="brief-description-wrapper">
                       <p className="brief-description">
                           Studying at the University of Information Technology.

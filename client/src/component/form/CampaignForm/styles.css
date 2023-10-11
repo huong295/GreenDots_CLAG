@@ -21,3 +21,7 @@
 .ant-picker-range {
     width: 100%;
 }
+
+.ant-select.ant-select-in-form-item.ant-select-has-feedback.ant-select-auto-complete.ant-select-single.ant-select-allow-clear.ant-select-show-arrow.ant-select-show-search{
+    width: 100% !important;
+}

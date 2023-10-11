@@ -12,3 +12,7 @@
     background: #efefef;
     text-align: center;
   }
+
+  .ant-select.ant-select-in-form-item.ant-select-auto-complete.ant-select-single.ant-select-allow-clear.ant-select-show-search {
+    width: 100% !important;
+  }

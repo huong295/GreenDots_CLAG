@@ -5,22 +5,22 @@ import ReviewPage from '../../Review/Review_page';
 import './Tabs.css'
 
 interface Campaign {
-  organizerName: string,
-  campaignID: number,
-  startDate: string,
-  endDate: string,
-  openHour: string,
-  closeHour: string,
-  description: string,
-  campaignName: string,
-  address: string,
-  lat: number,
-  long: number,
-  receiveItems: string[],
-  receiveGifts: string,
+  organizerName: string;
+  campaignID: number;
+  startDate: string;
+  endDate: string;
+  openHour: string;
+  closeHour: string;
+  description?: string;
+  campaignName: string;
+  address: string;
+  lat: number;
+  long: number;
+  receiveItems: string[];
+  receiveGifts: string;
 }
 
-const TabsPage: React.FC<{ campaign: Campaign, setShowCampaignIndex: (idx: number) => void }> = ({ campaign, setShowCampaignIndex }) => {
+const TabsPage: React.FC<{ campaign: Campaign; setShowCampaignIndex: (idx: number) => void }> = ({ campaign, setShowCampaignIndex }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(true);
   const handleCancel = () => {

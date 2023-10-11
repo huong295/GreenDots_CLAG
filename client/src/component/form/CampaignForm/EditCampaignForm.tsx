@@ -1,9 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ExclamationCircleFilled, InboxOutlined, UploadOutlined } from '@ant-design/icons';
-import { Button, Checkbox, DatePicker, TimePicker, Form, FormInstance, Input, message, Modal, Select, Space, Upload, ConfigProvider } from 'antd';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-// import moment from "moment";
-// import locale from 'antd/locale/vi_VN';
+import { useState} from 'react';
+import { DatePicker, TimePicker, Form, Input, message, Modal, Select } from 'antd';
 import { useCampaign } from '../../../contexts/CampaignContext';
 import dayjs from 'dayjs';
 import './styles.css'
@@ -43,10 +39,6 @@ const EditCampaignForm = ({
 
     // Edit campaign modal
     const {showEditCampaignForm, setShowEditCampaignForm} = useCampaign();
-    
-    const showModal = () => {
-        setShowEditCampaignForm(true);
-    };
     
     const handleOk = () => {
         form.submit()
@@ -150,13 +142,6 @@ const EditCampaignForm = ({
         setIsConfirmModalOpen(false);
     };
 
-    // Checkbox
-    const [checked, setChecked] = useState(false);
-
-    const onChange = (e: CheckboxChangeEvent) => {
-        setChecked(e.target.checked);
-    };
-
     // Date range picker
     const dayRangeConfig = {
         rules: [{ type: 'array' as const, required: true, message: 'Please provide the time frame for your campaign!' }],
@@ -232,8 +217,12 @@ const EditCampaignForm = ({
                     showSearch
                     placeholder="Search to Select address"
                     // optionFilterProp="children"
-                    filterOption={(input, option) => (option?.children ?? '').toLowerCase().indexOf(input.toLowerCase()) >= 0
-                    || (option?.value ?? '').toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    filterOption={(input, option) => {
+                        const children = option?.children ?? '';
+                        const value = option?.value ?? '';
+                        return String(children).toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        || String(value).toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                    }}
                     // filterSort={(optionA, optionB) =>
                     // (optionA?.children ?? '').toLowerCase().localeCompare((optionB?.children ?? '').toLowerCase())
                     // }
@@ -297,8 +286,12 @@ const EditCampaignForm = ({
                 <Select 
                     allowClear
                     showSearch
-                    filterOption={(input, option) => (option?.children ?? '').toLowerCase().indexOf(input.toLowerCase()) >= 0
-                    || (option?.value ?? '').toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    filterOption={(input, option) => {
+                        const children = option?.children ?? '';
+                        const value = option?.value ?? '';
+                        return String(children).toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        || String(value).toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                    }}
                     mode="tags" 
                     placeholder="Please select kinds of trash"
                 >
@@ -334,8 +327,12 @@ const EditCampaignForm = ({
                 <Select 
                     allowClear
                     showSearch
-                    filterOption={(input, option) => (option?.children ?? '').toLowerCase().indexOf(input.toLowerCase()) >= 0
-                    || (option?.value ?? '').toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    filterOption={(input, option) => {
+                        const children = option?.children ?? '';
+                        const value = option?.value ?? '';
+                        return String(children).toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        || String(value).toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                    }}
                     mode="tags" 
                     placeholder="Please input gift(s)"
                 >

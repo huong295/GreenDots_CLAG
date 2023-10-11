@@ -51,7 +51,7 @@ export const OrganizerProvider: React.FC<React.PropsWithChildren<OrganizerProvid
       if (auth.isLoggedIn) {
           verifyOrganizer();
       }
-    }, [auth.isLoggedIn]);
+    },);
 
     return (
         <OrganizerContext.Provider value={{ 

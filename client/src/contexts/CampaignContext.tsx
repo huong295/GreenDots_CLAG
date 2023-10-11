@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 
 interface CampaignProps {
@@ -16,15 +16,20 @@ interface CampaignProps {
   lat: number,
   long: number,
   averageRating: number,
+  icon?: any,
 }
 
 interface CampaignContextProps {
   showNewCampaignForm: boolean;
   setShowNewCampaignForm: (showNewCampaignForm: boolean) => void;
   showEditCampaignForm: boolean;
-  setShowEditCampaignForm: (showNewCampaignForm: boolean) => void;
+  setShowEditCampaignForm: (showEditCampaignForm: boolean) => void;
   campaigns: CampaignProps[];
   setCampaigns: (campaigns: CampaignProps[]) => void;
+  changedCampaigns: CampaignProps[];
+  setChangedCampaigns: (changedCampaigns: CampaignProps[]) => void;
+  newCampaign: CampaignProps;
+  setNewCampaign: (newCampaign: CampaignProps) => void;
 }
 
 const CampaignContext = createContext<CampaignContextProps>({
@@ -34,6 +39,10 @@ const CampaignContext = createContext<CampaignContextProps>({
   setShowEditCampaignForm: () => {},
   campaigns: [],
   setCampaigns: () => {},
+  changedCampaigns: [],
+  setChangedCampaigns: () => {},
+  newCampaign: {} as CampaignProps,
+  setNewCampaign: () => {},
 });
 
 interface CampaignProviderProps {
@@ -44,6 +53,11 @@ export const CampaignProvider: React.FC<React.PropsWithChildren<CampaignProvider
     const [showNewCampaignForm, setShowNewCampaignForm] = useState(false);
     const [showEditCampaignForm, setShowEditCampaignForm] = useState(false);
     const [campaigns, setCampaigns] = useState<CampaignProps[]>([]);
+    const [changedCampaigns, setChangedCampaigns] = useState<CampaignProps[]>([]);
+    const [newCampaign, setNewCampaign] = useState<CampaignProps>({} as CampaignProps);
+    useEffect(() =>{
+
+    });
 
     return (
         <CampaignContext.Provider value={{ showNewCampaignForm,   
@@ -51,7 +65,11 @@ export const CampaignProvider: React.FC<React.PropsWithChildren<CampaignProvider
                                             showEditCampaignForm, 
                                             setShowEditCampaignForm,
                                             campaigns,
-                                            setCampaigns }}>
+                                            setCampaigns,
+                                            changedCampaigns,
+                                            setChangedCampaigns,
+                                            newCampaign,
+                                            setNewCampaign }}>
           {children}
         </CampaignContext.Provider>
     );

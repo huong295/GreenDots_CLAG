@@ -30,7 +30,8 @@ const NewCampaignForm = () => {
     const auth = useAuth();
     const organizer = useOrgan();
     // Create campaign modal
-    const {showNewCampaignForm, setShowNewCampaignForm} = useCampaign();
+    const {showNewCampaignForm, setShowNewCampaignForm,
+        setNewCampaign, setChangedCampaigns} = useCampaign();
     const [currentItems, setCurrentItems] = useState([]);
     const [address, setAddress] = useState<Location>();
     
@@ -93,7 +94,7 @@ const NewCampaignForm = () => {
         const closeHour = customDate.toISOString().replace('T', ' ').substring(11, 19)
 
         // Description and gifts
-        values.description = (values.description ? values.description : '') 
+        values.description = (values.description ? values.description.replaceAll("'", "''") : '') 
                                 + "\n Gifts: " + (values.receiveGifts ? values.receiveGifts : '')
 
         delete values.timeFrame
@@ -115,9 +116,21 @@ const NewCampaignForm = () => {
         // POST to database
         console.log(values);
         axios.post(`${API_ENDPOINT}/create-campaign`, values)
-        setShowNewCampaignForm(false);
+        const newReceiveItems = values.receiveItems.map((insertItem: string | number) => {
+            if (typeof insertItem === 'number') {
+                const item = currentItems.find((item) => item['ItemID'] == insertItem);
+                return item?.['ItemName'];
+            }
+            return insertItem;
+        })
+        values.receiveItems = newReceiveItems;
+
+        console.log(values);
+        setShowNewCampaignForm(false); 
+        setNewCampaign({...values});
+        setChangedCampaigns([{...values}]);
         message.success('Create campaign success!');
-        form.resetFields();
+        form.resetFields(); 
     };
     
     // Confirm modal
@@ -190,7 +203,7 @@ const NewCampaignForm = () => {
                     label="Address"
                     hasFeedback
                     initialValue={address}
-                    rules={[{ required: true, message: 'Please type in your address!' }]}
+                    // rules={[{ required: true, message: 'Please type in your address!' }]}
                 >
                     <SearchBar onLocationSearch={(location:any) => setAddress({...location})}/>
                 </Form.Item>
@@ -199,7 +212,7 @@ const NewCampaignForm = () => {
                     name="receiveItems"
                     label="Kinds of trash"
                     hasFeedback
-                    initialValue={""}
+                    // initialValue={""}
                     rules={[{ required: true, message: 'Please select kinds of trash you are receiving!', type: 'array' }]}
                 >
                 <Select 

@@ -1,6 +1,6 @@
 // src/components/SignupForm.tsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // navigate to another page
+import { Link, useNavigate } from 'react-router-dom'; // navigate to another page
 import { signup } from '../../services/services';
 import { message } from 'antd';
 
@@ -121,6 +121,11 @@ const SignupForm: React.FC = () => {
         >
           Sign Up
         </button>
+        <div className="w-full text-center py-2">Do you have an account?  <span>
+            <Link to="/login" className="underline">
+              Login{' '}
+            </Link>
+          </span> here</div>
       </div>
     </div>
   );

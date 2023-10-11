@@ -8,7 +8,7 @@ interface DataCampaign {
     endDate: string;
     openHour: string;
     closeHour: string;
-    description: string;
+    description?: string;
     recyclingItems: string[],
     receiveGifts: string,
 }

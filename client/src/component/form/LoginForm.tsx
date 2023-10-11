@@ -1,6 +1,6 @@
 // src/components/Login.tsx
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'; // navigate to another page
+import { Link, useNavigate } from 'react-router-dom'; // navigate to another page
 import { login } from "../../services/services";
 import jwtDecode from "jwt-decode";
 import { useAuth } from '../../auth/AuthContext'
@@ -115,9 +115,9 @@ const Login: React.FC = () => {
           Login
         </button>
         <div className="w-full text-center py-2">New to Green dots?  <span>
-            <a href="/signup" className="underline">
+            <Link to="/signup" className="underline">
               Sign up{' '}
-            </a>
+            </Link>
           </span> here</div>
       </div>
     </div>
