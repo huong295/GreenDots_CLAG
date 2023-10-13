@@ -78,7 +78,7 @@ export default function Home() {
   const [isMounted, setIsMounted] = useState(true);
   const { myPosition, setMyPosition, setCenterPosition, 
     zoomValue, setZoomValue, centerValue, setCenterValue, searchResult, setSearchResult,
-    showDirection, showWelcomeToWhatEver, setShowWelcomeToWhatEver, setHiddenClass} = useMapItems();
+    showDirection, setShowDirection, showWelcomeToWhatEver, setShowWelcomeToWhatEver, setHiddenClass} = useMapItems();
   const [dateResult, setDateResult] = useState<DateResult>(null);
   const mapRef = useRef<any>(null);
 
@@ -133,6 +133,7 @@ export default function Home() {
   //   console.log(location.lat, location.lon);
   // };
   const handleSearch = (searchResult: LatLon, dateResult: RangeValue<Dayjs>) => {
+    setShowDirection(false);
     axios
       .get(`${API_ENDPOINT}/campaigns/all`, {
         headers: {
@@ -190,6 +191,7 @@ export default function Home() {
 
   const { setShowNewCampaignForm } = useCampaign();
   const handleCreateCampaign = () => {
+    setShowDirection(false);
     if (organizer.organizerID) {
       setShowNewCampaignForm(true);
     } else {
@@ -238,8 +240,10 @@ export default function Home() {
     if (changedCampaigns && changedCampaigns.length > 0 && !isMounted) {
       // let centerLat = 0;
       // let centerLng = 0;
+      // const customCampaign = 
       campaigns.map((campaign) =>{
-        if (changedCampaigns.find(item => item.campaignID === campaign.campaignID)) {
+        if (changedCampaigns.find(item => item.campaignID === campaign.campaignID ||
+          JSON.stringify(changedCampaigns[0]) === JSON.stringify(newCampaign))) {
         campaign.icon = YellowMarker;
         // centerLat += campaign.lat;
         // centerLng += campaign.long;
@@ -281,6 +285,12 @@ export default function Home() {
       }
     };
   }, [isMounted]);
+
+  useEffect(() => {
+    return () => {
+    setShowDirection(false);
+    }
+  }, [])
 
   return (
     <>
@@ -364,7 +374,7 @@ export default function Home() {
               // left: "50%",
               // transform: "translateX(-50%)",
               bottom: 0,
-              width: "80%",
+              width: "66%",
               height: "fit-content",
             }}
           >

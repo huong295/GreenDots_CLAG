@@ -52,7 +52,7 @@ const TabsPage: React.FC<{ campaign: Campaign; setShowCampaignIndex: (idx: numbe
 
   return (
     <>
-      <Modal title="" open={isModalOpen} onCancel={handleCancel}  footer={null}>
+      <Modal title="" open={isModalOpen} width="60vw" onCancel={handleCancel}  footer={null}>
         <Tabs 
           defaultActiveKey="1"
           type="card"

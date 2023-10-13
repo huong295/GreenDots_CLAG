@@ -189,9 +189,9 @@ const EditCampaignForm = ({
                 name="campaignName"
                 label="Name"
                 hasFeedback
-                rules={[{ required: true, message: 'Please input your compaign name!' }]}
+                rules={[{ required: true, message: 'Please input your campaign name!' }]}
                 >
-                    <Input allowClear placeholder="Please input your compaign name"/>
+                    <Input allowClear placeholder="Please input your campaign name"/>
                 </Form.Item>
 
                 <Form.Item name="timeFrame" label="Time frame" {...dayRangeConfig}>

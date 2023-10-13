@@ -6,6 +6,7 @@ import { useAuth } from '../../../auth/AuthContext'
 import SearchBar from '../../ui/SearchBar';
 import axios from 'axios';
 import './styles.css'
+import { useMapItems } from '../../../contexts/MapItemsContext';
 
 const { Option } = Select;
 
@@ -32,6 +33,7 @@ const NewCampaignForm = () => {
     // Create campaign modal
     const {showNewCampaignForm, setShowNewCampaignForm,
         setNewCampaign, setChangedCampaigns} = useCampaign();
+    const {setHiddenClass} = useMapItems();
     const [currentItems, setCurrentItems] = useState([]);
     const [address, setAddress] = useState<Location>();
     
@@ -99,7 +101,8 @@ const NewCampaignForm = () => {
 
         delete values.timeFrame
         delete values.workingTime
-        delete values.receiveGifts
+        // delete values.receiveGifts
+        values.averageRating = 0
 
         values = {
             ...values,
@@ -129,6 +132,7 @@ const NewCampaignForm = () => {
         setShowNewCampaignForm(false); 
         setNewCampaign({...values});
         setChangedCampaigns([{...values}]);
+        setHiddenClass("");
         message.success('Create campaign success!');
         form.resetFields(); 
     };
@@ -185,9 +189,9 @@ const NewCampaignForm = () => {
                     name="campaignName"
                     label="Name"
                     hasFeedback
-                    rules={[{ required: true, message: 'Please input your compaign name!' }]}
+                    rules={[{ required: true, message: 'Please input your campaign name!' }]}
                 >
-                    <Input allowClear placeholder="Please input your compaign name"/>
+                    <Input allowClear placeholder="Please input your campaign name"/>
                 </Form.Item>
 
                 <Form.Item hasFeedback name="timeFrame" label="Time frame" {...dayRangeConfig}>

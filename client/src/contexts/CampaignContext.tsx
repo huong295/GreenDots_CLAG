@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 
 interface CampaignProps {
@@ -55,9 +55,6 @@ export const CampaignProvider: React.FC<React.PropsWithChildren<CampaignProvider
     const [campaigns, setCampaigns] = useState<CampaignProps[]>([]);
     const [changedCampaigns, setChangedCampaigns] = useState<CampaignProps[]>([]);
     const [newCampaign, setNewCampaign] = useState<CampaignProps>({} as CampaignProps);
-    useEffect(() =>{
-
-    });
 
     return (
         <CampaignContext.Provider value={{ showNewCampaignForm,   

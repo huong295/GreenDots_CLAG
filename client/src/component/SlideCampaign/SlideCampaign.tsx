@@ -10,7 +10,6 @@ import TabsPage from "../card/TabsPage/TabsPage";
 import EditCampaignForm from "../form/CampaignForm/EditCampaignForm";
 import { useCampaign } from "../../contexts/CampaignContext";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../auth/AuthContext";
 import { useMapItems } from "../../contexts/MapItemsContext";
 import SearchBar from "../ui/SearchBar";
 import "./SlideCampaign.css"
@@ -50,7 +49,6 @@ const SlideCampaign: React.FC<SliderProps> = ({ slides }) => {
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOrganizerID, _] = useState(0);
-  const {isLoggedIn} = useAuth();
   const {myPosition, startPoint, setStartPoint, endPoint, setEndPoint, 
     setShowDirection, hiddenClass, setHiddenClass} = useMapItems();
 
@@ -63,19 +61,19 @@ const SlideCampaign: React.FC<SliderProps> = ({ slides }) => {
       prevIndex === 0 ? slides.length - 1 : prevIndex - 1
     );
   };
-  const { showEditCampaignForm, setShowEditCampaignForm } = useCampaign()
+  const { showEditCampaignForm } = useCampaign()
 
   const items: MenuProps['items'] = [
-    {
-      label: ( isLoggedIn&&
-        <button 
-          onClick={ () => {setShowEditCampaignForm(true) }}
-          style={{width: "100%", textAlign: "start"}}
-        > Edit
-        </button>
-      ),
-      key: '1',
-    },
+    // {
+    //   label: ( isLoggedIn&&
+    //     <button 
+    //       onClick={ () => {setShowEditCampaignForm(true) }}
+    //       style={{width: "100%", textAlign: "start"}}
+    //     > Edit
+    //     </button>
+    //   ),
+    //   key: '1',
+    // },
     {
       label: (
         <Link to={`/profile/${selectedOrganizerID}`} style={{width: "100%", textAlign: "start"}}>
@@ -94,6 +92,7 @@ const SlideCampaign: React.FC<SliderProps> = ({ slides }) => {
   // Handle find direction
   const handleFindDirection = ({ lat, lon }: { lat: number, lon: number }) => {
     setEndPoint({lat: lat, lng: lon});
+    setShowDirection(false);
     if (myPosition === null){
       setShowFindDirectionModal(true);
     }
